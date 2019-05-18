@@ -17,7 +17,7 @@ void display(vector<vector<type>> vv, string title=""){
     int rows = vv.size();
     int columns = vv[0].size();
     
-    cout<<title<<"\n";
+    cout<<title;
     for(int r=0;r<rows;r++){
         for(int c=0;c<columns;c++){
             cout<<vv[r][c]<<" ";
@@ -125,11 +125,11 @@ int main() {
     
     
     cout<<"-------\n";
-    display(m, "Matrix:");
+    display(m, "Matrix:\n");
     cout<<"-------\n\n";
     
     cout<<"-------\n";
-    display(v, "Visited (Before):");
+    display(v, "Visited (Before):\n");
     cout<<"-------\n";
     cout<<"Processing ...\n";
     int result = islands(m, v);
