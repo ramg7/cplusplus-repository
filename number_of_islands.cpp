@@ -53,14 +53,12 @@ int check(vector<vector<char>> & grid, vector<vector<bool>> & visited, int r, in
     
     // Up
     // e.g: -1 0
-    //    if(r == rows - 1){
     tr = r-1;
     tc = c;
     while(tr > 0 && grid[tr][tc] == '1'){
         check(grid, visited, tr, tc);
         --tr;
     }
-    //    }
     
     // Right
     // e.g: 0 1
