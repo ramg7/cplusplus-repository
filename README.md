@@ -1,3 +1,3 @@
 # cplusplus-repository
 
-This repository contains solution to common invterview questions.
+This repository contains solutions to common interview questions.
