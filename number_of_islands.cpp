@@ -13,82 +13,39 @@
 using namespace std;
 
 template <class type>
-void display(vector<vector<type>> vv, string title=""){
-    int rows = vv.size();
-    int columns = vv[0].size();
+void display(vector<vector<type>> m, string title=""){
+    int rows = m.size();
+    int columns = m[0].size();
     
     cout<<title;
     for(int r=0;r<rows;r++){
         for(int c=0;c<columns;c++){
-            cout<<vv[r][c]<<" ";
+            cout<<m[r][c]<<'\t';
         }
-        cout<<endl;
+        cout<<'\n';
     }
 }
 
-int check(vector<vector<char>> & grid, vector<vector<bool>> & visited, int r, int c){
+void check(vector<vector<char>> & grid, vector<vector<bool>> & visited, int r, int c){
     
     int rows = grid.size();
     int columns = grid[0].size();
     
-    if(r > rows || c > columns || r < 0 || c < 0 || grid[r][c] != '1' || visited[r][c]) return 1;
+    if(r >= rows || c >= columns || r < 0 || c < 0 || grid[r][c] == '0' || visited[r][c]) return;
     
-    int tr, tc;
+    visited[r][c] = true;
+   
+    // down
+    check(grid, visited, r+1, c);
     
-    // Origin
-    // e.g: 0 0
-    if(grid[r][c] == '1')
-        visited[r][c] = true;
+    // up
+    check(grid, visited, r-1, c);
     
-    // Down
-    // e.g: 1 0
-    tr = r+1;
-    tc = c;
-    while(tr < rows && grid[tr][tc] == '1'){
-        check(grid, visited, tr, tc);
-        //        visited[tr++][tc] = true;
-        //        or
-        ++tr;
-    }
+    // left
+    check(grid, visited, r, c-1);
     
-    // Up
-    // e.g: -1 0
-    tr = r-1;
-    tc = c;
-    while(tr > 0 && grid[tr][tc] == '1'){
-        check(grid, visited, tr, tc);
-        --tr;
-    }
-    
-    // Right
-    // e.g: 0 1
-    tr = r;
-    tc = c+1;
-    while(tc < columns && grid[tr][tc] == '1'){
-        check(grid, visited, tr, tc);
-        ++tc;
-    }
-    
-    // Left
-    // e.g: 0 -1
-    tr = r;
-    tc = c-1;
-    while(tc > 0 && grid[tr][tc] == '1'){
-        check(grid, visited, tr, tc);
-        --tc;
-    }
-    
-    // Diagonal
-    // e.g: 1 1
-    tr = r+1;
-    tc = c+1;
-    while(tr < rows && tc < columns && grid[tr][tc] == '1'){
-        check(grid, visited, tr, tc);
-        ++tr;
-        ++tc;
-    }
-    
-    return 0;
+    // right
+    check(grid, visited, r, c+1);
 }
 
 int islands(vector<vector<char>> & grid, vector<vector<bool>> & visited){
@@ -117,12 +74,7 @@ int main() {
     m.push_back(vector<char> {'0','0','0','0'});
     m.push_back(vector<char> {'1','0','1','0'});
     
-    vector<vector<bool>> v;
-    v.push_back(vector<bool> (m[0].size(), false));
-    v.push_back(vector<bool> (m[0].size(), false));
-    v.push_back(vector<bool> (m[0].size(), false));
-    v.push_back(vector<bool> (m[0].size(), false));
-    
+    vector<vector<bool>> v(m.size(), vector<bool> (m[0].size(), false));    
     
     cout<<"-------\n";
     display(m, "Matrix:\n");
