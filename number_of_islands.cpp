@@ -26,14 +26,14 @@ void display(vector<vector<type>> m, string title=""){
     }
 }
 
-void check(vector<vector<char>> & grid, vector<vector<bool>> & visited, int r, int c){
+void check(vector<vector<char>> & grid, int r, int c){
     
     int rows = grid.size();
     int columns = grid[0].size();
     
-    if(r >= rows || c >= columns || r < 0 || c < 0 || grid[r][c] == '0' || visited[r][c]) return;
+    if(r >= rows || c >= columns || r < 0 || c < 0 || grid[r][c] != '1') return;
     
-    visited[r][c] = true;
+    grid[r][c] = 'i';
    
     // down
     check(grid, visited, r+1, c);
@@ -48,15 +48,15 @@ void check(vector<vector<char>> & grid, vector<vector<bool>> & visited, int r, i
     check(grid, visited, r, c+1);
 }
 
-int islands(vector<vector<char>> & grid, vector<vector<bool>> & visited){
+int islands(vector<vector<char>> & grid){
     int rows = grid.size();
     int columns = grid[0].size();
     
     int components = 0;
     for(int r=0;r<rows;++r){
         for(int c=0;c<columns;++c){
-            if(grid[r][c] == '1' && !visited[r][c]){
-                check(grid, visited, r, c);
+            if(grid[r][c] == '1'){
+                check(grid, r, c);
                 components++;
             }
         }
@@ -74,21 +74,11 @@ int main() {
     m.push_back(vector<char> {'0','0','0','0'});
     m.push_back(vector<char> {'1','0','1','0'});
     
-    vector<vector<bool>> v(m.size(), vector<bool> (m[0].size(), false));    
-    
     cout<<"-------\n";
     display(m, "Matrix:\n");
     cout<<"-------\n\n";
-    
-    cout<<"-------\n";
-    display(v, "Visited (Before):\n");
-    cout<<"-------\n";
-    cout<<"Processing ...\n";
-    int result = islands(m, v);
-    cout<<"-------\n";
-    display(v, "Visited (After):");
-    cout<<"-------";
-    
+   
+    int result = islands(m);
     cout<<"\n\n-------------------------\n";
     cout<<"* Number of Islands: "<<result<<"\n";
     cout<<"-------------------------\n\n";
