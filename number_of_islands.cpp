@@ -26,26 +26,29 @@ void display(vector<vector<type>> m, string title=""){
     }
 }
 
-void check(vector<vector<char>> & grid, int r, int c){
-    
+bool inBounds(vector<vector<char>> grid, int r, int c){
     int rows = grid.size();
     int columns = grid[0].size();
-    
-    if(r >= rows || c >= columns || r < 0 || c < 0 || grid[r][c] != '1') return;
+    return (r >= 0 && r < rows && c >= 0 && c < cols);
+}
+
+void check(vector<vector<char>> & grid, int r, int c){
+    if(!inBounds(r, c)) return;
+    if(grid[r][c] != '1') return;
     
     grid[r][c] = 'i';
    
     // down
-    check(grid, visited, r+1, c);
+    check(grid, r+1, c);
     
     // up
-    check(grid, visited, r-1, c);
+    check(grid, r-1, c);
     
     // left
-    check(grid, visited, r, c-1);
+    check(grid, r, c-1);
     
     // right
-    check(grid, visited, r, c+1);
+    check(grid, r, c+1);
 }
 
 int islands(vector<vector<char>> & grid){
